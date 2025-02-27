@@ -1,30 +1,45 @@
 import java.util.Scanner;
 
 public class Lesson {
-
     public static void main(String[] args) {
-        // Ay isimlerini içeren string
-        String months = "January  February March    April    May      June     July     August   SeptemberOctober  November December ";
-
-        int monthNumber;
-        try ( // Kullanıcıdan giriş al
-                Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Enter a number (1-12): ");
-            monthNumber = scanner.nextInt();
+        // Scanner nesnesi oluştur
+        try (Scanner scanner = new Scanner(System.in)) {
+            // Kullanıcıdan iki sayı ve bir işlem operatörü al
+            System.out.print("Birinci sayıyı girin: ");
+            double num1 = scanner.nextDouble();
+            
+            System.out.print("İkinci sayıyı girin: ");
+            double num2 = scanner.nextDouble();
+            
+            System.out.print("Bir işlem operatörü girin (+, -, *, /): ");
+            char operator = scanner.next().charAt(0);
+            
+            double result = 0;
+            boolean validOperator = true;
+            
+            // Girilen operatöre göre işlem yapma
+            switch (operator) {
+                case '+' -> result = num1 + num2;
+                case '-' -> result = num1 - num2;
+                case '*' -> result = num1 * num2;
+                case '/' -> {
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                    } else {
+                        System.out.println("Bir sayı sıfıra bölünemez!");
+                        validOperator = false;
+                    }
+                }
+                default -> {
+                    System.out.println("Geçersiz operatör girdiniz!");
+                    validOperator = false;
+                }
+            }
+            
+            // Sonucu yazdır
+            if (validOperator) {
+                System.out.println("Sonuç: " + result);
+            }
         }
-
-        // Geçerli bir giriş olup olmadığını kontrol et
-        if (monthNumber < 1 || monthNumber > 12) {
-            System.out.println("Invalid input! Please enter a number between 1 and 12.");
-            return;
-        }
-
-        // Her ay ismi 9 karakter uzunluğunda yerleştirildi (boşluklar dahil)
-        int startIndex = (monthNumber - 1) * 9;
-        String monthName = months.substring(startIndex, startIndex + 9).trim(); // Boşlukları temizle
-
-        // Sonucu ekrana yazdır
-        System.out.println("Month: " + monthName);
-    
     }
 }
